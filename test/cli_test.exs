@@ -11,4 +11,8 @@ defmodule CliTest do
   test "token returned if token given" do
     assert parse_args(["token"]) == { "token" }
   end
+
+  test "if no token given help is shown" do
+    assert parse_args([""]) == :help
+  end
 end

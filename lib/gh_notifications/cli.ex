@@ -6,7 +6,9 @@ defmodule GhNotifications.CLI do
   """
 
   def run(argv) do
-    parse_args(argv)
+    argv
+      |> parse_args
+      |> process
   end
 
   def parse_args(argv) do
@@ -14,8 +16,22 @@ defmodule GhNotifications.CLI do
                                      aliases:  [h: :help      ])
     case parse do
       { [help: true ], _, _ } -> :help
+      { _, [""], _ } -> :help
       { _, [token], _ } -> { token }
       _ -> :help
     end
+  end
+
+  def process(:help) do
+    IO.puts """
+    usage: gh_notifcations <GITHUB_API_TOKEN>
+    """
+    System.halt(0)
+  end
+
+  def process({token}) do
+    IO.puts """
+    token
+    """
   end
 end
