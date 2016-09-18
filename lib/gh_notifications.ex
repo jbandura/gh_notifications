@@ -1,0 +1,2 @@
+defmodule GhNotifications do
+end
