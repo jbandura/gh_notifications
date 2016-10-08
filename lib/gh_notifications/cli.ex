@@ -1,11 +1,13 @@
 defmodule GhNotifications.CLI do
+  alias GhNotifications.Notifications
+
   @moduledoc """
   Handle the command line parsing and the dispatch of various
   functions that fetch the last notifications/mentions from
   github
   """
 
-  def run(argv) do
+  def main(argv) do
     argv
       |> parse_args
       |> process
@@ -30,8 +32,7 @@ defmodule GhNotifications.CLI do
   end
 
   def process({token}) do
-    IO.puts """
-    token
-    """
+    { status, %{ body: notifications } } = Notifications.all(token)
+    IO.puts length(notifications)
   end
 end
