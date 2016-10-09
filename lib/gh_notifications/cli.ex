@@ -32,7 +32,14 @@ defmodule GhNotifications.CLI do
   end
 
   def process({token}) do
-    { status, %{ body: notifications } } = Notifications.all(token)
-    IO.puts length(notifications)
+    process_response(Notifications.all(token))
+  end
+
+  defp process_response({:ok, %{body: notifications}}) do
+    IO.puts "N: #{length(notifications)}"
+  end
+
+  defp process_response({:error, _}) do
+    IO.puts "Invalid access token."
   end
 end
