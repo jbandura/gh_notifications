@@ -3,7 +3,7 @@ defmodule OutputParserTest do
   alias GhNotifications.OutputParser
 
   test "it correctly returns count of notifications" do
-    response = [%{id: 1}]
+    response = [%{"id" => "1"}]
 
     notifications_count = OutputParser.notifications_count(response)
     assert notifications_count == 1
@@ -11,8 +11,8 @@ defmodule OutputParserTest do
 
   test "it correctly returns count of notifications and mentions" do
     response = [
-      %{id: 1},
-      %{id: 2, reason: "mention"},
+      %{"id" => "1"},
+      %{"id" => "2", "reason" => "mention"},
     ]
 
     notifications_count = OutputParser.notifications_count(response)
@@ -21,9 +21,9 @@ defmodule OutputParserTest do
 
   test "it correctly returns count of mentions" do
     response = [
-      %{id: 1, reason: "foo"},
-      %{id: 2, reason: "mention"},
-      %{id: 3, reason: "mention"},
+      %{"id" => "1", "reason" => "foo"},
+      %{"id" => "2", "reason" => "mention"},
+      %{"id" => "3", "reason" => "mention"},
     ]
 
     assert OutputParser.mentions_count(response) == 2

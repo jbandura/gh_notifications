@@ -3,7 +3,7 @@ defmodule GhNotifications.OutputParser do
 
   def mentions_count(notifications) do
     notifications
-      |> Enum.filter(fn(el) -> el.reason == "mention" end)
+      |> Enum.filter(fn(el) -> el["reason"] == "mention" end)
       |> length
   end
 end
