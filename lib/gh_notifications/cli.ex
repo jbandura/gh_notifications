@@ -1,5 +1,6 @@
 defmodule GhNotifications.CLI do
   alias GhNotifications.Notifications
+  alias GhNotifications.OutputParser
 
   @moduledoc """
   Handle the command line parsing and the dispatch of various
@@ -36,7 +37,11 @@ defmodule GhNotifications.CLI do
   end
 
   defp process_response({:ok, %{body: notifications}}) do
-    IO.puts "N: #{length(notifications)}"
+    notifications_count = OutputParser.notifications_count(notifications)
+    mentions_count = OutputParser.mentions_count(notifications)
+    mentions_string = if (mentions_count > 0), do: " | M: #{mentions_count}", else: ""
+    notifications_string = if (notifications_count > 0), do: "N: #{notifications_count}", else: ""
+    IO.puts(notifications_string <> mentions_string)
   end
 
   defp process_response({:error, _}) do

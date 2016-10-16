@@ -17,12 +17,28 @@ defmodule CliTest do
     assert parse_args([""]) == :help
   end
 
-  test "it returns proper notifications count when correct token passed" do
+  test "it returns proper notifications count and mentions count when correct token passed" do
     process_output = fn ->
       process({"GOOD_TOKEN"})
     end
 
-    assert capture_io(process_output) == "N: 1\n"
+    assert capture_io(process_output) == "N: 2 | M: 1\n"
+  end
+
+  test "it doesn't show text when no mentions found" do
+    process_output = fn ->
+      process({"GOOD_TOKEN_NO_MENTIONS"})
+    end
+
+    assert capture_io(process_output) == "N: 2\n"
+  end
+
+  test "it doesn't show anything when no notifications and no mentions" do
+    process_output = fn ->
+      process({"GOOD_TOKEN_NO_NOTIFICATIONS"})
+    end
+
+    assert capture_io(process_output) == "\n"
   end
 
   test "it returns meaningful error when token invalid" do

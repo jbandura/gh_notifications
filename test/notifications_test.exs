@@ -5,7 +5,7 @@ defmodule NotificationsTest do
   test "retrieving notifications with proper token" do
     { status, response } = Notifications.all("GOOD_TOKEN")
     assert status == :ok
-    assert length(response.body) == 1
+    assert length(response.body) == 2
   end
 
   test "retrieving notifications with wrong token" do
